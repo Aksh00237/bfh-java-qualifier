@@ -32,7 +32,7 @@ public class BfhJavaQualifierApplication implements CommandLineRunner {
     public void run(String... args) {
         log.info("=== BFH Qualifier App Starting ===");
         try {
-            // 1) Generate webhook + token
+           
             GenerateResponse resp = webhookService.generateWebhook(name, regNo, email);
             String webhookUrl = (resp.getWebhook() != null && !resp.getWebhook().isBlank())
                     ? resp.getWebhook() : fallbackTestWebhookUrl;
@@ -41,18 +41,18 @@ public class BfhJavaQualifierApplication implements CommandLineRunner {
             log.info("Webhook URL: {}", webhookUrl);
             log.info("Access Token received: {}", (accessToken == null ? "null" : "***"));
 
-            // 2) Which question applies?
+            
             String link = webhookService.questionLinkForRegNo(regNo);
             log.info("Your SQL Question link: {}", link);
 
-            // 3) Load SQL
+            
             String finalQuery = webhookService.loadSqlFromFile("solution.sql");
             if (finalQuery == null || finalQuery.isBlank()) {
                 log.warn("No SQL found in solution.sql. Paste your final query and re-run.");
                 return;
             }
 
-            // 4) Submit
+           
             webhookService.submitFinalQuery(webhookUrl, accessToken, finalQuery);
             log.info("Submitted final SQL successfully.");
         } catch (Exception e) {
