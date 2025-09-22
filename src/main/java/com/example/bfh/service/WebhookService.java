@@ -101,7 +101,7 @@ public class WebhookService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            // Spec: Authorization header me JWT token (Bearer mention nahi)
+            
             if (accessToken != null && !accessToken.isBlank()) headers.add("Authorization", accessToken);
 
             Map<String, Object> payload = new HashMap<>();
